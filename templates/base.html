@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🍾 Dashboard</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+</head>
+
+<body data-theme="dark">
+  <section class="hero is-small">
+    <div class="hero-body">
+      <nav class="navbar" role="navigation">
+        <div class="navbar-brand">
+          <a class="navbar-item title is-4">CharSyn</a>
+        </div>
+        <hr class="navbar-divider">
+        <a class="navbar-item" href="{{ url_for('index')  }}">Home</a>
+        <a class="navbar-item">All Characters</a>
+      </nav>
+    </div>
+  </section>
+  <main class="content container mt-5">
+    {% block body %}{% endblock %}
+  </main>
+  <footer class="footer">
+    <div class="content has-text-centered">
+      <p>
+        <strong>Character Synergy</strong>
+        by <a href="https://github.com/DLimaRafael">Rafael D. Lima</a>
+      </p>
+    </div>
+  </footer>
+</body>
+
+{% block style %}
+
+{% endblock %}
+
+</html>

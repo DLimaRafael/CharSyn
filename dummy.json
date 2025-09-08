@@ -1,0 +1,142 @@
+[
+  {
+    "id": 1,
+    "base_id": 1,
+    "name": "Shadowblade Enforcer",
+    "rarity": 5,
+    "archetype_id": 2
+  },
+  {
+    "id": 2,
+    "base_id": 1,
+    "name": "Ironfist Guardian",
+    "rarity": 4,
+    "archetype_id": 1
+  },
+  {
+    "id": 3,
+    "base_id": 1,
+    "name": "Stormpiercer Scout",
+    "rarity": 5,
+    "archetype_id": 3
+  },
+  {
+    "id": 4,
+    "base_id": 1,
+    "name": "Crimson Edge Warrior",
+    "rarity": 4,
+    "archetype_id": 2
+  },
+  {
+    "id": 5,
+    "base_id": 1,
+    "name": "Thunderclap Vanguard",
+    "rarity": 5,
+    "archetype_id": 1
+  },
+  {
+    "id": 6,
+    "base_id": 2,
+    "name": "Arcane Rifleman",
+    "rarity": 5,
+    "archetype_id": 3
+  },
+  {
+    "id": 7,
+    "base_id": 2,
+    "name": "Forgehammer Engineer",
+    "rarity": 4,
+    "archetype_id": 1
+  },
+  {
+    "id": 8,
+    "base_id": 2,
+    "name": "Phantom Dagger Assassin",
+    "rarity": 5,
+    "archetype_id": 2
+  },
+  {
+    "id": 9,
+    "base_id": 2,
+    "name": "Boltstrike Sniper",
+    "rarity": 4,
+    "archetype_id": 3
+  },
+  {
+    "id": 10,
+    "base_id": 2,
+    "name": "Steelclad Defender",
+    "rarity": 5,
+    "archetype_id": 1
+  },
+  {
+    "id": 11,
+    "base_id": 3,
+    "name": "Ethereal Lance Knight",
+    "rarity": 5,
+    "archetype_id": 3
+  },
+  {
+    "id": 12,
+    "base_id": 3,
+    "name": "Crystal Blade Sorceress",
+    "rarity": 4,
+    "archetype_id": 2
+  },
+  {
+    "id": 13,
+    "base_id": 3,
+    "name": "Quakefist Mystic",
+    "rarity": 5,
+    "archetype_id": 1
+  },
+  {
+    "id": 14,
+    "base_id": 3,
+    "name": "Windpiercer Archer",
+    "rarity": 4,
+    "archetype_id": 3
+  },
+  {
+    "id": 15,
+    "base_id": 3,
+    "name": "Flameedge Duelist",
+    "rarity": 5,
+    "archetype_id": 2
+  },
+  {
+    "id": 16,
+    "base_id": 4,
+    "name": "Voidhammer Warlord",
+    "rarity": 5,
+    "archetype_id": 1
+  },
+  {
+    "id": 17,
+    "base_id": 4,
+    "name": "Shadowpierce Rogue",
+    "rarity": 4,
+    "archetype_id": 3
+  },
+  {
+    "id": 18,
+    "base_id": 4,
+    "name": "Bloodmoon Slasher",
+    "rarity": 5,
+    "archetype_id": 2
+  },
+  {
+    "id": 19,
+    "base_id": 4,
+    "name": "Earthshaker Titan",
+    "rarity": 4,
+    "archetype_id": 1
+  },
+  {
+    "id": 20,
+    "base_id": 4,
+    "name": "Starlance Sentinel",
+    "rarity": 5,
+    "archetype_id": 3
+  }
+]
