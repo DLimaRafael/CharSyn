@@ -1,6 +1,7 @@
 from http import HTTPStatus
-from flask import Flask, Response, jsonify, render_template
+from flask import Flask, Response, jsonify, render_template, request
 from sqlalchemy import or_
+from data import get_characters_by_name
 from models import Character, Match
 from database import db
 
@@ -25,6 +26,8 @@ def index() -> str:
 
 
 # CHARACTER INFORMATION
+
+
 def get_matches(character_id: int) -> list[dict]:
     matches = Match.query.filter(
         or_(Match.character_id == character_id, Match.match_id == character_id)
@@ -45,7 +48,10 @@ def get_best_matches(matches: list[dict]) -> list[dict]:
 
 
 def is_match_duplicate(character_id: int, match_id: int) -> bool:
-    return Match.query.filter_by(character_id=character_id, match_id=match_id).first()
+    return (
+        Match.query.filter_by(character_id=character_id, match_id=match_id).first()
+        is not None
+    )
 
 
 def is_match_valid(character_id: int, match_id: int) -> bool:
@@ -53,6 +59,12 @@ def is_match_valid(character_id: int, match_id: int) -> bool:
     match_character = Character.query.get_or_404(match_id).base_id
 
     return base_character == match_character
+
+
+@app.route("/search", methods=["POST"])
+def get_unmatched_characters_by_name() -> list[dict]:
+    character_name = request.get_json()["name"]
+    return get_characters_by_name(character_name)
 
 
 @app.route("/character/<int:character_id>", methods=["GET"])

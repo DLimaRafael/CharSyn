@@ -1,14 +1,20 @@
 {% extends "base.html" %}
+
+{% block head %}
+<title>CharSyn - All Characters</title>
+{% endblock %}
+
 {% block body %}
 <div class="columns is-multiline is-mobile">
   {% if characters %}
   {% for character in characters %}
-  <div class="column is-11-mobile is-4-tablet is-3-desktop">
+  <div class="column is-6-mobile is-4-tablet is-3-desktop">
     <a href="{{ url_for('character_details', character_id=character.id)  }}">
-      <div class="card is-clickable is-unselectable" style="box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.35);">
+      <div class="card is-unselectable">
         <div class="card-image">
           <figure class="image is-3by4">
-            <img src="{{ url_for('static', filename='assets/placeholder.webp')  }}" alt="{{ character.name  }}">
+            <img src="{{ url_for('static', filename='assets/placeholder.webp')  }}" alt="{{ character.name  }}"
+              loading="lazy">
           </figure>
         </div>
         <div class="card-content">
@@ -18,15 +24,16 @@
             <span class="has-text-weight-bold"
               style="{{ 'color: #841090;' if character.rarity == 4 else 'color: #FF7600;' if character.rarity == 5 else '' }}">
               {{ "S" if character.rarity == 5 else "A" }}
-            </span> <span class="has-text-weight-bold is-uppercase">{{ character.archetype.name }}</span>
+            </span>
+            <span class="has-text-weight-bold is-uppercase">{{ character.archetype.name }}</span>
           </div>
         </div>
+      </div>
     </a>
   </div>
+  {% endfor %}
 </div>
-{% endfor %}
 {% else %}
 <p class="is-size-5 has-text-grey is-unselectable">No characters found in database...</p>
 {% endif %}
-</div>
 {% endblock %}
