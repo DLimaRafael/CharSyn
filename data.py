@@ -17,7 +17,7 @@ def format_character_data(data: list) -> list[dict]:
     ]
 
 
-def get_unmatched_characters(character_id: int) -> list[dict]:
+def get_unmatched_characters(character_name: str, character_id: int) -> list[dict]:
     current_character = Character.query.get_or_404(character_id)
     matched_ids = Match.query.filter(
         or_(Match.character_id == character_id, Match.match_id == character_id)
@@ -25,6 +25,7 @@ def get_unmatched_characters(character_id: int) -> list[dict]:
 
     unmatched_characters = (
         Character.query.filter(Character.id.notin_(matched_ids))
+        .filter(Character.name.ilike(f"%{character_name}%"))
         .filter(Character.base_id != current_character.base_id)
         .all()
     )
