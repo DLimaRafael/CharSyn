@@ -63,15 +63,15 @@ def is_match_valid(character_id: int, match_id: int) -> bool:
 
 @app.route("/search", methods=["POST"])
 def search_characters_by_name() -> list[dict]:
-    character_name = request.get_json()["name"]
-    character_id = request.get_json()["character_id"]
-    base_id = request.get_json()["base_id"] or 0
-    character_list = get_characters_by_name(character_name, base_id)
-
+    data = request.get_json()
+    
+    character_id = data.get("character_id")
     if character_id:
-        return get_unmatched_characters(character_id, character_list)
-
-    return character_list
+        return get_unmatched_characters(character_id)
+    
+    character_name = data.get("name")
+    base_id = data.get("base_id")
+    return get_characters_by_name(character_name, base_id)
 
 
 @app.route("/character/<int:character_id>", methods=["GET"])
