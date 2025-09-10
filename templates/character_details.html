@@ -1,13 +1,12 @@
 {% extends "base.html" %}
 
 {% block head %}
-
 <title>CharSyn - {{ character.name }}</title>
 {% endblock %}
 
 {% block body %}
 <div class="columns">
-  <div class="column">
+  <div class="column is-one-third">
     <div class="card">
       <div class="card-image">
         <figure class="image is-3by4">
@@ -38,8 +37,7 @@
         <p class="title">Recommended Matches</p>
       </div>
       <!-- Search / Refresh controls -->
-      <!-- <form id="matchForm" action="{{ url_for('get_unmatched_characters_by_name') }}" method="GET" class="form"> -->
-      <form id="matchForm" action="" method="POST" class="form">
+      <form id="matchForm" class="form">
         <div class="field">
           <label for="name" class="label">Search</label>
           <div class="control is-expanded">
@@ -50,38 +48,54 @@
           <div class="control">
             <label class="checkbox">
               <input type="checkbox">
-              Include Unmatched Characters
+              Include All Characters
             </label>
           </div>
         </div>
       </form>
-      {% if matches %}
-      <table class="table is-bordered is-striped is-fullwidth">
-        <thead>
-          <tr>
-            <th>Base</th>
-            <th>Character Name</th>
-            <th>Votes</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for match in matches %}
-          <tr>
-            <td>{{ character.base.name }}</td>
-            <td>{{ character.name }}</td>
-            <td>{{ match.votes }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      {% else %}
-      <p class="is-size-4 has-text-weight-bold is-unselectable has-text-centered has-text-grey mt-6">No Matches found.
-      </p>
-      {% endif %}
+      <div class="block"></div>
+      <div class="table-container">
+        <table class="table is-striped is-fullwidth is-hoverable is-bordered">
+          <thead>
+            <tr id="matchTableHeader">
+              <th>Base</th>
+              <th>Character Name</th>
+              <th>Archetype</th>
+              <th>Votes</th>
+            </tr>
+          </thead>
+          <tbody id="matchTable">
+            {% if matches %}
+            {% for match in matches %}
+            <tr>
+              <td>{{ character.base.name }}</td>
+              <td>{{ character.name }}</td>
+              <td>{{ match.archetype }}</td>
+              <td>{{ match.votes }}</td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+              <td id="noMatchesWarning" style=" text-align: center">
+                <span class="has-text-grey is-unselectable">
+                  No Matches for this character...
+                </span>
+              </td>
+            </tr>
+            {% endif %}
+          </tbody>
+        </table>
+
+      </div>
     </section>
   </div>
 </div>
 
-<script src="{{ url_for('static', filename='characterData.js') }}"></script>
+<script>
+  window.tableData = {{matches | tojson | safe}}
+  window.character_id = {{character.id}}
+  window.base_id = {{character.base.id}}
+</script>
+<script type="module" src="{{ url_for('static', filename='characterData.js') }}"></script>
 
 {% endblock %}

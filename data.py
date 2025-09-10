@@ -29,10 +29,16 @@ def get_unmatched_characters(
     return filtered
 
 
-def get_characters_by_name(name: str) -> list[dict]:
+def get_character_by_id(id: int) -> dict:
+    character = Character.query.get_or_404(id)
+    return format_character_data([character])[0]
+
+
+def get_characters_by_name(name: str, base_id: int = 0) -> list[dict]:
     characters = (
         Character.query.join(BaseId)
         .filter(or_(Character.name.ilike(f"%{name}%"), BaseId.name.ilike(f"%{name}%")))
+        .filter(BaseId.id != base_id)
         .all()
     )
     return format_character_data(characters)

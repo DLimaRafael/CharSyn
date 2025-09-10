@@ -1,7 +1,7 @@
 from http import HTTPStatus
 from flask import Flask, Response, jsonify, render_template, request
 from sqlalchemy import or_
-from data import get_characters_by_name
+from data import get_characters_by_name, get_unmatched_characters
 from models import Character, Match
 from database import db
 
@@ -62,9 +62,16 @@ def is_match_valid(character_id: int, match_id: int) -> bool:
 
 
 @app.route("/search", methods=["POST"])
-def get_unmatched_characters_by_name() -> list[dict]:
+def search_characters_by_name() -> list[dict]:
     character_name = request.get_json()["name"]
-    return get_characters_by_name(character_name)
+    character_id = request.get_json()["character_id"]
+    base_id = request.get_json()["base_id"] or 0
+    character_list = get_characters_by_name(character_name, base_id)
+
+    if character_id:
+        return get_unmatched_characters(character_id, character_list)
+
+    return character_list
 
 
 @app.route("/character/<int:character_id>", methods=["GET"])
