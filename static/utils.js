@@ -1,3 +1,25 @@
+export async function fetchCharacters(name="", character_id=0, base_id=0) {
+  try {
+    const data = await fetch("/search", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name, character_id, base_id }),
+    })
+
+    if (!data.ok) {
+      throw new Error(`HTTP Error! Status: ${data.status}`)
+    }
+
+    return await data.json()
+
+  } catch (error) {
+    console.error("Error listing characters: ", error)
+    return []
+  }
+}
+
 export function debounce(func, wait) {
   let timeout;
   return function (...args) {

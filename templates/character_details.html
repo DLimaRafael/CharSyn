@@ -19,11 +19,11 @@
     <section class="hero is-small">
       <div class="hero-body">
         <p class="title">{{ character.name }}</p>
-        <p class="subtitle">{{ character.base.name }}</p>
-        <p class="has-text-justified"><b>{{ character.base.name }} - {{ character.name }}</b> is an <b>{{ 'S' if
+        <p class="subtitle">{{ character.base_name }}</p>
+        <p class="has-text-justified"><b>{{ character.base_name }} - {{ character.name }}</b> is an <b>{{ 'S' if
             character.rarity
             == 5 else 'A' }} rank </b>
-          character of the <b>{{ character.archetype.name }} archetype</b>. Below are the top matches for this unit and
+          character of the <b>{{ character.archetype_name }} archetype</b>. Below are the top matches for this unit and
           a
           table
           containing all registered matches the community has voted on.</p>
@@ -55,9 +55,9 @@
       </form>
       <div class="block"></div>
       <div class="table-container">
-        <table class="table is-striped is-fullwidth is-hoverable is-bordered">
+        <table class="table is-striped is-fullwidth is-narrow is-hoverable ">
           <thead>
-            <tr id="matchTableHeader">
+            <tr id="matchTableHeader" class="has-text-centered">
               <th>Base</th>
               <th>Character Name</th>
               <th>Archetype</th>
@@ -65,36 +65,18 @@
             </tr>
           </thead>
           <tbody id="matchTable">
-            {% if matches %}
-            {% for match in matches %}
-            <tr>
-              <td>{{ character.base.name }}</td>
-              <td>{{ character.name }}</td>
-              <td>{{ match.archetype }}</td>
-              <td>{{ match.votes }}</td>
-            </tr>
-            {% endfor %}
-            {% else %}
-            <tr>
-              <td id="noMatchesWarning" style=" text-align: center">
-                <span class="has-text-grey is-unselectable">
-                  No Matches for this character...
-                </span>
-              </td>
-            </tr>
-            {% endif %}
+            <!-- This table body is entirely constructed by JavaScript! -->
           </tbody>
         </table>
-
       </div>
     </section>
   </div>
 </div>
 
 <script>
-  window.tableData = {{matches | tojson | safe}}
+  window.tableData = {{matches | tojson}}
   window.character_id = {{character.id}}
-  window.base_id = {{character.base.id}}
+  window.base_id = {{character.base_id}}
 </script>
 <script type="module" src="{{ url_for('static', filename='characterData.js') }}"></script>
 
