@@ -1,11 +1,11 @@
-export async function fetchCharacters(name="", character_id=0, base_id=0) {
+export async function fetchCharacters(name="", character_id=0, base_id=0, is_matching=false) {
   try {
     const data = await fetch("/search", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ name, character_id, base_id }),
+      body: JSON.stringify({ name, character_id, base_id, is_matching }),
     })
 
     if (!data.ok) {

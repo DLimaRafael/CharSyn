@@ -21,12 +21,14 @@ def format_character_data(data: list, votes: dict = {}) -> list[dict]:
     ]
 
 
-def calculate_votes(matches: list, matched_ids: list) -> dict:
+def calculate_votes(matches: list, character_id: int) -> dict:
     votes: dict = {}
 
     for match in matches:
-        if match.match_id in matched_ids:
-            votes[match.match_id] = match.votes
+        index = (
+            match.match_id if match.character_id == character_id else match.character_id
+        )
+        votes[index] = match.votes
     return votes
 
 
@@ -40,9 +42,8 @@ def get_matched_characters(character_id: int) -> list[dict]:
         for match in matches
     ]
 
-    votes = calculate_votes(matches, matched_ids)
-
     matched_characters = Character.query.filter(Character.id.in_(matched_ids)).all()
+    votes = calculate_votes(matches, character_id)
 
     return format_character_data(matched_characters, votes)
 
@@ -53,11 +54,7 @@ def get_all_characters(character_name: str, character_id: int) -> list[dict]:
         or_(Match.character_id == character_id, Match.match_id == character_id)
     ).all()
 
-    matched_ids = [
-        match.match_id if match.character_id == character_id else match.character_id
-        for match in matches
-    ]
-    votes = calculate_votes(matches, matched_ids)
+    votes = calculate_votes(matches, character_id)
 
     all_characters = (
         Character.query.join(BaseId)
@@ -132,7 +129,7 @@ def is_match_valid(character_id: int, match_id: int) -> bool:
 def add_vote(match_id: int, vote: int) -> Response:
     match = Match.query.get_or_404(match_id)
 
-    match.votes += 1
+    match.votes += vote
     db.session.commit()
     return jsonify({"message": "Vote added successfully.", "status": HTTPStatus.OK})
 

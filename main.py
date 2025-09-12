@@ -33,13 +33,16 @@ def index() -> str:
 @app.route("/search", methods=["POST"])
 def search_characters_by_name() -> list[dict]:
     data = request.get_json()
+    base_id = data.get("base_id")
     character_id = data.get("character_id")
     character_name = data.get("name")
+    has_match_filter = data.get("is_matching")
 
+    if has_match_filter:
+        return get_matched_characters(character_id)
     if character_id:
         return get_all_characters(character_name, character_id)
 
-    base_id = data.get("base_id")
     return get_characters_by_name(character_name, base_id)
 
 

@@ -3,7 +3,9 @@ const searchInput = document.getElementById("matchForm")
 const matchTable = document.getElementById("matchTable")
 const colSpan = document.getElementById("matchTableHeader").childElementCount
 
-async function onMatchVote(row, vote) {
+let hasVoted = false
+
+async function onMatchVote(spanElement, row, vote) {
   try {
     const data = await fetch(`/character`, {
       method: 'POST',
@@ -17,6 +19,8 @@ async function onMatchVote(row, vote) {
       throw new Error(`HTTP Error! Status: ${data.status}`)
     }
 
+    spanElement.textContent = Number(spanElement.textContent) + vote
+    hasVoted = true
     return await data.json()
 
   } catch (error) {
@@ -46,18 +50,19 @@ function insertTableRows(data) {
     td4.className = "is-flex is-justify-content-space-between";
 
     const downButton = document.createElement("button");
-    downButton.className = "button is-small is-danger is-outlined";
+    downButton.className = "button is-small is-danger is-outlined voting-btn";
     downButton.textContent = "Dw";
-    downButton.addEventListener("click", () => onMatchVote(row, -1)); // Attach event listener
 
     const voteSpan = document.createElement("span");
     voteSpan.className = "has-text-centered";
     voteSpan.textContent = row.votes ?? 0;
 
     const upButton = document.createElement("button");
-    upButton.className = "button is-small is-success is-outlined";
+    upButton.className = "button is-small is-success is-outlined voting-btn";
     upButton.textContent = "Up";
-    upButton.addEventListener("click", () => onMatchVote(row, 1)); // Attach event listener
+
+    downButton.addEventListener("click", () => onMatchVote(voteSpan, row, -1)); // Attach event listener
+    upButton.addEventListener("click", () => onMatchVote(voteSpan, row, 1)); // Attach event listener
 
     td4.appendChild(downButton);
     td4.appendChild(voteSpan);
@@ -102,11 +107,16 @@ function isTablePopulated() {
 async function searchByName(name) {
   matchTable.innerHTML = ''
   showProgressBar()
-  const includeAll = document.querySelector('input[type="checkbox"]');
-  // In the submit handler:
-  let data = !includeAll.checked
-    ? window.tableData.filter(character => character.name.toLowerCase().includes(name.toLowerCase()) || character.base_name.toLowerCase().includes(name.toLowerCase()))
-    : await fetchCharacters(name, character_id, base_id);
+  const includeAll = document.getElementById("include-all-filter");
+  let data = []
+
+  if (!includeAll.checked && !hasVoted) {
+    data = window.tableData.filter(character => character.name.toLowerCase().includes(name.toLowerCase())
+      || character.base_name.toLowerCase().includes(name.toLowerCase()))
+  } else {
+    data = await fetchCharacters(name, character_id, base_id, hasVoted);
+  }
+  hasVoted = false
 
   matchTable.innerHTML = ''
   if (data.length) {

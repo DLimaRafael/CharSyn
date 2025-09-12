@@ -38,18 +38,37 @@
       </div>
       <!-- Search / Refresh controls -->
       <form id="matchForm" class="form">
-        <div class="field">
-          <label for="name" class="label">Search</label>
-          <div class="control is-expanded">
+        <label for="name" class="label">Search</label>
+        <div class="field has-addons">
+          <div class="control is-expanded has-icons-left">
             <input id="matchSearchInput" name="name" type="text" class="input" placeholder="Character name">
+            <span class="icon is-left">
+              <i data-feather="search"></i>
+            </span>
+          </div>
+          <div class="control">
+            <div class="dropdown is-hoverable is-right">
+              <div class="dropdown-trigger">
+                <button type="button" class="button is-link is-outlined" aria-haspopup="true"
+                  aria-controls="filters-dropdown">
+                  <span class="icon">
+                    <i data-feather="filter"></i>
+                  </span>
+                </button>
+              </div>
+              <div class="dropdown-menu" id="filters-dropdown" role="menu">
+                <div class="dropdown-content">
+                  <label class="checkbox dropdown-item">
+                    <input id="include-all-filter" type="checkbox">
+                    Include All Characters
+                  </label>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="field">
           <div class="control">
-            <label class="checkbox">
-              <input type="checkbox">
-              Include All Characters
-            </label>
           </div>
         </div>
       </form>
