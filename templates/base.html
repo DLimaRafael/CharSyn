@@ -4,23 +4,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🍾 Dashboard</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+  <script src="https://unpkg.com/feather-icons"></script>
+  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+  <script type="module" src="{{ url_for('static', filename='utils.js')}}"></script>
+  {% block head %}
+  <title>Character Synergy</title>
+  {% endblock %}
 </head>
 
 <body data-theme="dark">
-  <section class="hero is-small">
-    <div class="hero-body">
-      <nav class="navbar" role="navigation">
-        <div class="navbar-brand">
-          <a class="navbar-item title is-4">CharSyn</a>
-        </div>
-        <hr class="navbar-divider">
-        <a class="navbar-item" href="{{ url_for('index')  }}">Home</a>
-        <a class="navbar-item">All Characters</a>
-      </nav>
+  <nav class="navbar" role="navigation" style="position: sticky; top: 0;">
+    <div class="navbar-brand">
+      <a class="navbar-item title is-4 has-text-white has-background-link">CharSyn</a>
     </div>
-  </section>
+    <hr class="navbar-divider">
+    <a class="navbar-item" href="{{ url_for('index')  }}">Home</a>
+    <a class="navbar-item">All Characters</a>
+  </nav>
   <main class="content container mt-5">
     {% block body %}{% endblock %}
   </main>
@@ -37,5 +38,9 @@
 {% block style %}
 
 {% endblock %}
+
+<script>
+  feather.replace()
+</script>
 
 </html>

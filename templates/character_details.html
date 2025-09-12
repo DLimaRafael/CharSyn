@@ -1,8 +1,12 @@
 {% extends "base.html" %}
 
+{% block head %}
+<title>CharSyn - {{ character.name }}</title>
+{% endblock %}
+
 {% block body %}
 <div class="columns">
-  <div class="column">
+  <div class="column is-one-third">
     <div class="card">
       <div class="card-image">
         <figure class="image is-3by4">
@@ -15,50 +19,84 @@
     <section class="hero is-small">
       <div class="hero-body">
         <p class="title">{{ character.name }}</p>
-        <p class="subtitle">{{ character.base.name }}</p>
-        <p class="has-text-justified"><b>{{ character.base.name }} - {{ character.name }}</b> is an <b>{{ 'S' if
+        <p class="subtitle">{{ character.base_name }}</p>
+        <p class="has-text-justified"><b>{{ character.base_name }} - {{ character.name }}</b> is an <b>{{ 'S' if
             character.rarity
             == 5 else 'A' }} rank </b>
-          character of the <b>{{ character.archetype.name }} archetype</b>. Below are the top matches for this unit and
+          character of the <b>{{ character.archetype_name }} archetype</b>. Below are the top matches for this unit and
           a
           table
           containing all registered matches the community has voted on.</p>
       </div>
     </section>
 
+    <hr>
+
     <section class="hero is-small">
       <div class="hero-body">
         <p class="title">Recommended Matches</p>
       </div>
-      <div class="container mb-2 is-flex is-justify-content-flex-end is-gap-2">
-        <button class="button is-success is-outlined">New Match</button>
-        <button class="button is-info is-outlined">Refresh</button>
+      <!-- Search / Refresh controls -->
+      <form id="matchForm" class="form">
+        <label for="name" class="label">Search</label>
+        <div class="field has-addons">
+          <div class="control is-expanded has-icons-left">
+            <input id="matchSearchInput" name="name" type="text" class="input" placeholder="Character name">
+            <span class="icon is-left">
+              <i data-feather="search"></i>
+            </span>
+          </div>
+          <div class="control">
+            <div class="dropdown is-hoverable is-right">
+              <div class="dropdown-trigger">
+                <button type="button" class="button is-link is-outlined" aria-haspopup="true"
+                  aria-controls="filters-dropdown">
+                  <span class="icon">
+                    <i data-feather="filter"></i>
+                  </span>
+                </button>
+              </div>
+              <div class="dropdown-menu" id="filters-dropdown" role="menu">
+                <div class="dropdown-content">
+                  <label class="checkbox dropdown-item">
+                    <input id="include-all-filter" type="checkbox">
+                    Include All Characters
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+          </div>
+        </div>
+      </form>
+      <div class="block"></div>
+      <div class="table-container">
+        <table class="table is-striped is-fullwidth is-narrow is-hoverable ">
+          <thead>
+            <tr id="matchTableHeader" class="has-text-centered">
+              <th>Base</th>
+              <th>Character Name</th>
+              <th>Archetype</th>
+              <th>Votes</th>
+            </tr>
+          </thead>
+          <tbody id="matchTable">
+            <!-- This table body is entirely constructed by JavaScript! -->
+          </tbody>
+        </table>
       </div>
-      {% if matches %}
-      <table class="table is-bordered is-striped is-fullwidth">
-        <thead>
-          <tr>
-            <th>Base</th>
-            <th>Character Name</th>
-            <th>Votes</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for match in matches %}
-          <tr>
-            <td>{{ character.base.name }}</td>
-            <td>{{ character.name }}</td>
-            <td>{{ match.votes }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      {% else %}
-      <p class="is-size-4 has-text-weight-bold is-unselectable has-text-centered has-text-grey mt-6">No Matches found.
-      </p>
-      {% endif %}
     </section>
   </div>
 </div>
+
+<script>
+  window.tableData = {{matches | tojson}}
+  window.character_id = {{character.id}}
+  window.base_id = {{character.base_id}}
+</script>
+<script type="module" src="{{ url_for('static', filename='characterData.js') }}"></script>
 
 {% endblock %}
