@@ -22,7 +22,7 @@ with app.app_context():
 
 @app.route("/")
 def index() -> str:
-    characters = Character.query.all()
+    characters = get_characters_by_name("")
     return render_template(
         "index.html",
         characters=characters,

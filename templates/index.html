@@ -2,37 +2,40 @@
 
 {% block head %}
 <title>CharSyn - All Characters</title>
+<style>
+  .card .card-content {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .card:hover .card-content {
+    opacity: 1;
+  }
+</style>
 {% endblock %}
 
 {% block body %}
-<div class="columns is-multiline is-mobile">
-  {% if characters %}
-  {% for character in characters %}
-  <div class="column is-6-mobile is-4-tablet is-3-desktop">
-    <a href="{{ url_for('character_details', character_id=character.id)  }}">
-      <div class="card is-unselectable">
-        <div class="card-image">
-          <figure class="image is-3by4">
-            <img src="{{ url_for('static', filename='assets/placeholder.webp')  }}" loading="lazy">
-          </figure>
-        </div>
-        <div class="card-content">
-          <p class="title is-6">{{ character.base.name }}</p>
-          <p class="subtitle is-6">{{ character.name }}</p>
-          <div class="content is-flex is-justify-content-space-between">
-            <span class="has-text-weight-bold"
-              style="{{ 'color: #841090;' if character.rarity == 4 else 'color: #FF7600;' if character.rarity == 5 else '' }}">
-              {{ "S" if character.rarity == 5 else "A" }}
-            </span>
-            <span class="has-text-weight-bold is-uppercase">{{ character.archetype.name }}</span>
-          </div>
-        </div>
-      </div>
-    </a>
+<div class="section">
+  <div class="block">
+    <form id="global-search" class="form">
+      <p class="control has-icons-left">
+        <input name="name" type="text" class="input" placeholder="Character Name / Base ID Name">
+        <span class="icon is-left">
+          <i data-feather="search"></i>
+        </span>
+      </p>
+    </form>
   </div>
-  {% endfor %}
+  <div class="block">
+    <div id="characters-container" class="columns is-multiline is-mobile is-1">
+      <!-- Populated by JS -->
+    </div>
+
+  </div>
 </div>
-{% else %}
-<p class="is-size-5 has-text-grey is-unselectable">No characters found in database...</p>
-{% endif %}
+<script>
+  var data = {{characters | tojson}}
+</script>
+<script type="module" src="{{ url_for('static', filename='allCharacters.js') }}"></script>
+
 {% endblock %}
