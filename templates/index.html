@@ -18,12 +18,51 @@
 <div class="section">
   <div class="block">
     <form id="global-search" class="form">
-      <p class="control has-icons-left">
-        <input name="name" type="text" class="input" placeholder="Character Name / Base ID Name">
-        <span class="icon is-left">
-          <i data-feather="search"></i>
-        </span>
-      </p>
+      <div class="field">
+        <p class="control has-icons-left">
+          <input name="name" type="text" class="input" placeholder="Character Name / Base ID Name">
+          <span class="icon is-left">
+            <i data-feather="search"></i>
+          </span>
+        </p>
+      </div>
+      <div class="field buttons has-addons">
+        <div class="button is-static">
+          <span class="icon">
+            <i data-feather="filter"></i>
+          </span>
+        </div>
+        <div class="control dropdown is-hoverable">
+          <div class="dropdown-trigger">
+            <button type="button" class="button" aria-controls="base-character-filters">
+              Base Ch.
+            </button>
+          </div>
+          <div class="dropdown-menu" id="base-character-filters" role="menu">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+        <div class="control dropdown is-hoverable">
+          <div class="dropdown-trigger">
+            <button type="button" class="button" aria-controls='archetype-filters'>
+              Archetype
+            </button>
+          </div>
+          <div class="dropdown-menu" id="archetype-filters">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+        <div class="control dropdown is-hoverable">
+          <div class="dropdown-trigger">
+            <button type="button" class="button" aria-controls='rarity-filters'>
+              Rarity
+            </button>
+          </div>
+          <div class="dropdown-menu" id="archetype-filters">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
     </form>
   </div>
   <div class="block">

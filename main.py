@@ -1,13 +1,14 @@
 from flask import Flask, Response, render_template, request
-from data import (
-    create_or_update_match,
+
+from character_data import (
+    get_all_characters,
     get_character_by_id,
     get_characters_by_name,
     get_matched_characters,
-    get_all_characters,
 )
-from models import Character
 from database import db
+from filter_data import get_rarities
+from match_data import create_or_update_match
 
 app = Flask(__name__)
 
@@ -23,10 +24,7 @@ with app.app_context():
 @app.route("/")
 def index() -> str:
     characters = get_characters_by_name("")
-    return render_template(
-        "index.html",
-        characters=characters,
-    )
+    return render_template("index.html", characters=characters, rarities=get_rarities())
 
 
 # CHARACTER INFORMATION
