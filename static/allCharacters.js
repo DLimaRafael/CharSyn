@@ -12,13 +12,13 @@ function createCardElement(character) {
   }
 
   const card = document.createElement("div");
-  card.className = "column is-6-mobile is-3-tablet is-2-desktop";
+  card.className = "column is-4-mobile is-3-tablet is-2-desktop";
 
   const link = document.createElement("a");
   link.href = `/character/${character.id}`;
 
   const cardInner = document.createElement("div");
-  cardInner.className = "card is-unselectable is-shadowless is-radiusless";
+  cardInner.className = "card is-unselectable is-shadowless";
 
   // Image
   const cardImage = document.createElement("div");
@@ -36,22 +36,21 @@ function createCardElement(character) {
   const cardContent = document.createElement("div");
   cardContent.className =
     "card-content is-overlay is-flex is-flex-direction-column is-justify-content-space-between";
-  cardContent.style.backgroundColor = "rgba(0, 0, 0, 0.65)";
 
   const block = document.createElement("div");
   block.className = "block";
   const title = document.createElement("p");
-  title.className = "title is-6";
+  title.className = "title is-size-6 is-size-7-mobile";
   title.textContent = character.base_name;
   const subtitle = document.createElement("p");
-  subtitle.className = "subtitle is-6";
+  subtitle.className = "subtitle is-size-6 is-size-7-mobile";
   subtitle.textContent = character.name;
   block.append(title, subtitle);
 
   const content = document.createElement("div");
   content.className = "content is-flex is-justify-content-space-between";
   const rankSpan = document.createElement("span");
-  rankSpan.className = "has-text-weight-bold";
+  rankSpan.className = "has-text-weight-bold is-size-7-mobile";
   rankSpan.style.color =
     character.rarity === 4
       ? "#841090"
@@ -60,7 +59,8 @@ function createCardElement(character) {
         : "";
   rankSpan.textContent = character.rarity === 5 ? "S" : "A";
   const archetypeSpan = document.createElement("span");
-  archetypeSpan.className = "has-text-weight-bold is-uppercase";
+  archetypeSpan.className =
+    "has-text-weight-bold is-uppercase is-size-7-mobile";
   archetypeSpan.textContent = character.archetype_name;
   content.append(rankSpan, archetypeSpan);
 

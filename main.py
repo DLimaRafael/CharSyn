@@ -3,6 +3,7 @@ from flask import Flask, Response, render_template, request
 from character_data import (
     get_all_characters,
     get_character_by_id,
+    get_character_filters,
     get_characters_by_name,
     get_matched_characters,
 )
@@ -24,7 +25,12 @@ with app.app_context():
 @app.route("/")
 def index() -> str:
     characters = get_characters_by_name("")
-    return render_template("index.html", characters=characters, rarities=get_rarities())
+    return render_template(
+        "index.html",
+        characters=characters,
+        rarities=get_rarities(),
+        filters=get_character_filters(),
+    )
 
 
 # CHARACTER INFORMATION
@@ -66,4 +72,4 @@ def vote_match() -> Response:
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", debug=True)

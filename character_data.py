@@ -1,5 +1,6 @@
 from sqlalchemy import or_
 from models import BaseId, Character, Match
+from models.archetype import Archetype
 from utils import calculate_votes
 
 
@@ -74,3 +75,19 @@ def get_characters_by_name(name: str, base_id: int = 0) -> list[dict]:
         .all()
     )
     return format_character_data(characters)
+
+
+def get_character_filters() -> dict:
+    base_ids = BaseId.query.order_by(BaseId.name.asc()).all()
+    archetypes = Archetype.query.all()
+    rarities = (
+        Character.query.distinct(Character.rarity)
+        .order_by(Character.rarity.asc())
+        .values(Character.rarity)
+    )
+
+    return {
+        "base_ids": [(base.id, base.name) for base in base_ids],
+        "archetypes": [(archetype.id, archetype.name) for archetype in archetypes],
+        "rarities": [rarity[0] for rarity in rarities],
+    }

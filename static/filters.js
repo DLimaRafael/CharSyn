@@ -1,3 +1,10 @@
-const filters = Map(); // <filterName, filterValue>
+const filters = new Map();
+const filterTypes = new Map();
 
-function fetchBaseIdFilters() {}
+function applyFilter(filter, value) {
+  filters.set(filter, value);
+}
+
+function addListeners() {
+  const filterElements = document.querySelectorAll(".filter");
+}

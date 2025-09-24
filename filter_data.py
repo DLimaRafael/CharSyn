@@ -10,4 +10,5 @@ def get_archetypes() -> list[dict]:
 
 
 def get_rarities() -> list[int]:
-    return Character.query.with_entities(Character.rarity).distinct().all()
+    result = Character.query.with_entities(Character.rarity).distinct().all()
+    return [rarity[0] for rarity in result]
