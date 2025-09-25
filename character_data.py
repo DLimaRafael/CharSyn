@@ -16,6 +16,7 @@ def format_character_data(data: list, votes: dict = {}) -> list[dict]:
             "base_id": character.base.id,
             "base_name": character.base.name,
             "rarity": character.rarity,
+            "archetype_id": character.archetype.id,
             "archetype_name": character.archetype.name,
             "votes": votes.get(character.id, 0),
         }
@@ -87,7 +88,13 @@ def get_character_filters() -> dict:
     )
 
     return {
-        "base_ids": [(base.id, base.name) for base in base_ids],
-        "archetypes": [(archetype.id, archetype.name) for archetype in archetypes],
-        "rarities": [rarity[0] for rarity in rarities],
+        "base_id": ("Base ID", [(base.id, base.name) for base in base_ids]),
+        "archetype_id": (
+            "Archetype",
+            [(archetype.id, archetype.name) for archetype in archetypes],
+        ),
+        "rarity": (
+            "Rarity",
+            [(rarity[0], f"{'S' if rarity[0] == 5 else 'A'}") for rarity in rarities],
+        ),
     }

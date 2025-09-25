@@ -1,4 +1,4 @@
-import { debounce } from "./utils.js";
+import { filterData, defineInsertFn } from "./utils.js";
 const searchInput = document.getElementById("global-search");
 const targetElement = document.querySelector("#characters-container");
 
@@ -73,12 +73,7 @@ function createCardElement(character) {
   return card;
 }
 
-function insertDataColumns(characterData) {
-  if (!targetElement) {
-    console.error("Target element #characters-container not found");
-    return;
-  }
-
+function insertDataCards(characterData) {
   const fragment = document.createDocumentFragment();
   characterData.forEach((character) => {
     fragment.appendChild(createCardElement(character));
@@ -88,39 +83,19 @@ function insertDataColumns(characterData) {
   targetElement.appendChild(fragment);
 }
 
-function filterData(name) {
-  if (!data) {
-    console.error("Data is not defined");
-    return;
-  }
-
-  if (!name.trim()) {
-    insertDataColumns(data);
-    return;
-  }
-
-  const filteredData = data.filter(
-    (character) =>
-      character.name.toLowerCase().includes(name.toLowerCase()) ||
-      character.base_name.toLowerCase().includes(name.toLowerCase()),
-  );
-
-  insertDataColumns(filteredData);
-}
-
-const searchDebounceHandler = debounce(filterData, 300);
-
 searchInput.addEventListener("submit", (event) => {
   event.preventDefault();
 });
 
 searchInput.addEventListener("input", (event) => {
   const name = event.target.value;
-  searchDebounceHandler(name);
+  searchName = name;
+  filterData(data, filters, searchName);
 });
 
 document.addEventListener("DOMContentLoaded", () => {
+  defineInsertFn(insertDataCards);
   if (data.length) {
-    insertDataColumns(data);
+    insertDataCards(data);
   }
 });

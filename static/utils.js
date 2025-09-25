@@ -24,18 +24,24 @@ export async function fetchCharacters(
   }
 }
 
-export function filterData(data, filters) {
-  for (const [key, value] of filters) {
-    data = data.filter((character) => character[key] === value);
+let insertFunction = () => {};
+export function filterData(data, filters, name) {
+  for (const [key, value] of Object.entries(filters)) {
+    data = value ? data.filter((character) => character[key] === value) : data;
   }
 
-  return data;
+  if (name?.trim()) {
+    data = data.filter((character) => {
+      return (
+        character.name.toLowerCase().includes(name.toLowerCase()) ||
+        character.base_name.toLowerCase().includes(name.toLowerCase())
+      );
+    });
+  }
+
+  insertFunction(data);
 }
 
-export function debounce(func, wait) {
-  let timeout;
-  return function (...args) {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => func.apply(this, args), wait);
-  };
+export function defineInsertFn(insertFn) {
+  insertFunction = insertFn;
 }

@@ -34,55 +34,13 @@
           </span>
         </p>
       </div>
-      <div class="field buttons has-addons">
+      <div class="field buttons has-addons filter-buttons">
         <div class="button is-static">
           <span class="icon">
             <i data-feather="filter"></i>
           </span>
         </div>
-        <!-- The id will be the key name in the JS map, and the class "filter" helps identify the filters -->
-        <div id="baseId" class="control dropdown is-hoverable filter">
-          <div class="dropdown-trigger">
-            <button type="button" class="button filter-button" aria-controls="base-character-filters">
-              Base Ch.
-            </button>
-          </div>
-          <div class="dropdown-menu" id="base-id-filters" role="menu">
-            <div class="dropdown-content">
-              {% for base in filters.base_ids %}
-              <button id="base-{{base[0]}}" class="dropdown-item filter-button">{{base[1]}}</button>
-              {% endfor %}
-            </div>
-          </div>
-        </div>
-        <div id="archetype" class="control dropdown is-hoverable filter">
-          <div class="dropdown-trigger">
-            <button type="button" class="button filter-button" aria-controls='archetype-filters'>
-              Archetype
-            </button>
-          </div>
-          <div class="dropdown-menu" id="archetype-filters">
-            <div class="dropdown-content">
-              {% for archetype in filters.archetypes %}
-              <button id="type-{{archetype[0]}}" class="dropdown-item filter-button">{{archetype[1]}}</button>
-              {% endfor %}
-            </div>
-          </div>
-        </div>
-        <div id="rarity" class="control dropdown is-hoverable filter">
-          <div class="dropdown-trigger">
-            <button type="button" class="button filter-button" aria-controls='rarity-filters'>
-              Rarity
-            </button>
-          </div>
-          <div class="dropdown-menu" id="rarity-filters">
-            <div class="dropdown-content">
-              {% for rarity in filters.rarities %}
-              <button id="rarity-{{rarity}}" class="dropdown-item filter-button">{{rarity}}*</button>
-              {% endfor %}
-            </div>
-          </div>
-        </div>
+        <!-- Populated by JS -->
       </div>
     </form>
   </div>
@@ -90,11 +48,13 @@
     <div id="characters-container" class="columns is-multiline is-mobile is-1">
       <!-- Populated by JS -->
     </div>
-
   </div>
 </div>
 <script>
   var data = {{characters | tojson}}
+  var filterTypes = {{filters | tojson | safe}}
+  var filters = {}
+  var searchName = ""
 </script>
 <script type="module" src="{{ url_for('static', filename='allCharacters.js') }}"></script>
 <script type="module" src="{{ url_for('static', filename='filters.js') }}"></script>
