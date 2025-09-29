@@ -1,13 +1,15 @@
 from flask import Flask, Response, render_template, request
-from data import (
-    create_or_update_match,
+
+from character_data import (
+    get_all_characters,
     get_character_by_id,
+    get_character_filters,
     get_characters_by_name,
     get_matched_characters,
-    get_all_characters,
 )
-from models import Character
 from database import db
+from filter_data import get_rarities
+from match_data import create_or_update_match
 
 app = Flask(__name__)
 
@@ -22,10 +24,17 @@ with app.app_context():
 
 @app.route("/")
 def index() -> str:
-    characters = Character.query.all()
+    return render_template("base.html")
+
+
+@app.route("/all-characters")
+def all_characters() -> str:
+    characters = get_characters_by_name("")
     return render_template(
-        "index.html",
+        "all_characters.html",
         characters=characters,
+        rarities=get_rarities(),
+        filters=get_character_filters(),
     )
 
 
@@ -68,4 +77,4 @@ def vote_match() -> Response:
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", debug=True)

@@ -14,15 +14,14 @@
 </head>
 
 <body data-theme="dark">
-  <nav class="navbar" role="navigation" style="position: sticky; top: 0;">
+  <nav class="navbar" role="navigation">
     <div class="navbar-brand">
-      <a class="navbar-item title is-4 has-text-white has-background-link">CharSyn</a>
+      <a class="navbar-item has-text-weight-bold is-4 has-text-white has-background-link">CharSyn</a>
+      <a class="navbar-item" href="{{ url_for('index')  }}">Home</a>
+      <a class="navbar-item" href="{{ url_for('all_characters')  }}">All Characters</a>
     </div>
-    <hr class="navbar-divider">
-    <a class="navbar-item" href="{{ url_for('index')  }}">Home</a>
-    <a class="navbar-item">All Characters</a>
   </nav>
-  <main class="content container mt-5">
+  <main class="content container">
     {% block body %}{% endblock %}
   </main>
   <footer class="footer">
