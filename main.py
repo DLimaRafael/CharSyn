@@ -24,9 +24,14 @@ with app.app_context():
 
 @app.route("/")
 def index() -> str:
+    return render_template("base.html")
+
+
+@app.route("/all-characters")
+def all_characters() -> str:
     characters = get_characters_by_name("")
     return render_template(
-        "index.html",
+        "all_characters.html",
         characters=characters,
         rarities=get_rarities(),
         filters=get_character_filters(),
