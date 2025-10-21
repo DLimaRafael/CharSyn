@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title>CharSyn - Home</title>
+<style>
+  .pairs-table {
+    max-height: 320px;
+    overflow: auto;
+  }
+</style>
+{% endblock %}
+
+{% block body %}
+<section class="section">
+  <h1 class="title">Dashboard</h1>
+  <p class="subtitle">Quick overview of characters and pair voting</p>
+
+  <div class="columns is-multiline">
+    <div class="column">
+      <div class="card">
+        <header class="card-header">
+          <p class="card-header-title">Archetype distribution</p>
+        </header>
+        <div class="card-content">
+          <canvas id="archetypeChart" width="400" height="220"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="column">
+      <div class="card">
+        <header class="card-header">
+          <p class="card-header-title">Rarity distribution</p>
+        </header>
+        <div class="card-content">
+          <canvas id="rarityChart" width="400" height="220"></canvas>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="column is-full">
+      <div class="card">
+        <header class="card-header">
+          <p class="card-header-title">Top paired character pairs</p>
+        </header>
+        <div class="card-content pairs-table">
+          <table class="table is-fullwidth is-striped is-hoverable">
+            <thead>
+              <tr>
+                <th>Pair</th>
+                <th class="has-text-right">Votes</th>
+              </tr>
+            </thead>
+            <tbody id="topPairsBody">
+              <!-- populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="column is-full">
+      <div class="card">
+        <header class="card-header">
+          <p class="card-header-title">Least paired (positive votes)</p>
+        </header>
+        <div class="card-content pairs-table">
+          <table class="table is-fullwidth is-striped is-hoverable">
+            <thead>
+              <tr>
+                <th>Pair</th>
+                <th class="has-text-right">Votes</th>
+              </tr>
+            </thead>
+            <tbody id="bottomPairsBody">
+              <!-- populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Data passed from Flask
+  var archetypeData = {{archetype_counts | tojson }};
+  var rarityData = {{rarity_counts | tojson }};
+  var topPairs = {{top_pairs | tojson }};
+  var bottomPairs = {{bottom_pairs | tojson }};
+</script>
+
+<!-- Chart.js from CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="module" src="{{ url_for('static', filename='home.js') }}"></script>
+{% endblock %}
