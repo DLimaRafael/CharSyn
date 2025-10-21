@@ -35,7 +35,7 @@ def get_rarity_counts() -> list[dict]:
 def _pairs_with_names(order_by_votes_desc=True, limit=10, only_positive_votes=True):
     """
     Helper to return pairs with character names and vote counts.
-    Returns list of {char_a_id, char_a_name, char_b_id, char_b_name, votes}
+    Returns list of {char_a_id, char_a_name, char_a_base_name, char_b_id, char_b_name, char_b_base_name, votes}
     """
     A = aliased(Character)
     B = aliased(Character)
