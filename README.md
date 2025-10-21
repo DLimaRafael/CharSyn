@@ -23,3 +23,7 @@ A personal project for studying data anlysis. You can check characters in the da
 1. Clone this repository
 2. use `pip install -r requirements.txt` to install necessary libs
 3. run `python main.py` to run locally
+
+---
+
+Note: Image used for character cards belongs to Project Moon, I have no official affiliation with them and it was merely used for illustrative purposes.
