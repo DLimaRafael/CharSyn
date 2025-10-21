@@ -31,6 +31,9 @@ def get_best_matches(matches: list[dict]) -> list[dict]:
 
 
 def is_match_existent(character_id: int, match_id: int) -> Match | None:
+    """
+    Checks whether the match already exists, either A x B or B x A
+    """
     return Match.query.filter(
         or_(
             (Match.character_id == character_id) & (Match.match_id == match_id),
@@ -40,6 +43,9 @@ def is_match_existent(character_id: int, match_id: int) -> Match | None:
 
 
 def is_match_valid(character_id: int, match_id: int) -> bool:
+    """
+    Checks whether the match is valid, meaning no self-matching
+    """
     base_character = Character.query.get_or_404(character_id).base_id
     match_character = Character.query.get_or_404(match_id).base_id
 
