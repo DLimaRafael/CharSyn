@@ -11,6 +11,14 @@ from database import db
 from filter_data import get_rarities
 from match_data import create_or_update_match
 
+# new import for stats
+from stats_data import (
+    get_archetype_counts,
+    get_rarity_counts,
+    get_top_pairs,
+    get_bottom_pairs,
+)
+
 app = Flask(__name__)
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
@@ -24,11 +32,31 @@ with app.app_context():
 
 @app.route("/")
 def index() -> str:
-    return render_template("base.html")
+    """
+    Home / Dashboard page
+    aggregates counts and top/bottom pairs and renders a dashboard template
+    """
+    # collect stats
+    archetype_counts = get_archetype_counts()
+    rarity_counts = get_rarity_counts()
+    top_pairs = get_top_pairs(limit=10)
+    bottom_pairs = get_bottom_pairs(limit=10)
+
+    return render_template(
+        "home.html",
+        archetype_counts=archetype_counts,
+        rarity_counts=rarity_counts,
+        top_pairs=top_pairs,
+        bottom_pairs=bottom_pairs,
+    )
 
 
 @app.route("/all-characters")
 def all_characters() -> str:
+    """
+    Characters page
+    Returns all Characters from Database
+    """
     characters = get_characters_by_name("")
     return render_template(
         "all_characters.html",
