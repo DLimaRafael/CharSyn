@@ -45,3 +45,13 @@ export function filterData(data, filters, name) {
 export function defineInsertFn(insertFn) {
   insertFunction = insertFn;
 }
+
+export function debounce(func, timeout = 300) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      func.apply(this, args);
+    }, timeout);
+  };
+}
